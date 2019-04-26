@@ -1,0 +1,229 @@
+<h1>
+  Rowing!
+</h1>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand text-danger" [routerLink]="['/']">Home</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarNavDropdown"
+    aria-controls="navbarNavDropdown"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a
+          class="nav-link text-info"
+          href="javascript:void(0)"
+          (click)="this.boatAdd()"
+          >Add Boat <span class="sr-only">(current)</span></a
+        >
+      </li>
+      <li class="nav-item active">
+        <a
+          class="nav-link text-info"
+          href="javascript:void(0)"
+          (click)="this.boatEdit()"
+          >Edit Boat</a
+        >
+      </li>
+      <li class="nav-item active">
+        <a
+          class="nav-link text-info"
+          href="javascript:void(0)"
+          (click)="this.boatDelete()"
+          >Delete Boat</a
+        >
+      </li>
+      <li class="nav-item active">
+        <a
+          class="nav-link text-info"
+          href="javascript:void(0)"
+          (click)="this.boatsetPrice()"
+          >Set Price</a
+        >
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="col" *ngIf="this.addboat">
+  <h2>Add Boat</h2>
+  <div class="container">
+    <form [formGroup]="addForm" (submit)="onFormSubmit()">
+      <div class="form-group">
+        <label>Number of Seats</label>
+        <input
+          placeholder=""
+          class="form-control"
+          type="text"
+          formControlName="numberOfSeats"
+        />
+      </div>
+      <div class="form-group">
+        <label>boat Number*</label>
+        <input
+          placeholder=""
+          class="form-control"
+          type="text"
+          formControlName="bootNumber"
+        />
+        <br />
+        <br />
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="addForm?.invalid"
+        >
+          Submit
+        </button>
+        <br />
+        <br />
+        <div class="row" *ngIf="showMs" style="text-align: center">
+          <div class="col-xs-12" style="display:inline-block ">
+            <p class="alert alert-success">
+              <strong>Your modification has been applied successfully!</strong>
+            </p>
+
+            <button class="btn btn-primary btn-sm" (click)="showMessage()">
+              close
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="col" *ngIf="this.deleteboat">
+  <h2>Delete Boat</h2>
+  <div class="container">
+    <form [formGroup]="deleteForm" (submit)="onFormSubmit1()">
+      <div class="form-group">
+        <label>Boat Number*</label>
+        <select formControlName="boatid" class="form-control">
+          <option *ngFor="let cat of rBoats" [ngValue]="cat.id">{{
+            cat.bootNumber
+          }}</option>
+        </select>
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="deleteForm?.invalid"
+      >
+        Submit
+      </button>
+      <br />
+      <br />
+      <div class="row" *ngIf="showMs1" style="text-align: center">
+        <div class="col-xs-12" style="display:inline-block ">
+          <p class="alert alert-success">
+            <strong>Your modification has been applied successfully!</strong>
+          </p>
+
+          <button class="btn btn-primary btn-sm" (click)="showMessage1()">
+            close
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="col" *ngIf="this.editboat">
+  <h2>Edit Boat</h2>
+  <div class="container">
+    <form [formGroup]="editForm" (submit)="onFormSubmit2()">
+      <div class="form-group">
+        <label>New Boat Number*</label>
+        <input
+          placeholder=""
+          class="form-control"
+          type="text"
+          formControlName="BoatNumber"
+        />
+      </div>
+      <div class="form-group">
+        <label>Old Boat Number*</label>
+        <select formControlName="id" class="form-control">
+          <option *ngFor="let cat of rBoats" [ngValue]="cat.id">{{
+            cat.bootNumber
+          }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>New Number Of Seats*</label>
+        <input
+          placeholder=""
+          class="form-control"
+          type="text"
+          formControlName="numberOfSeats"
+        />
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="editForm?.invalid"
+      >
+        Submit
+      </button>
+      <br />
+      <br />
+      <div class="row" *ngIf="showMs2" style="text-align: center">
+        <div class="col-xs-12" style="display:inline-block ">
+          <p class="alert alert-success">
+            <strong>Your modification has been applied successfully!</strong>
+          </p>
+
+          <button class="btn btn-primary btn-sm" (click)="showMessage2()">
+            close
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="col" *ngIf="this.setpriceboat">
+  <h2>Set Price</h2>
+  <div class="container">
+    <form [formGroup]="setPriceForm" (submit)="onFormSubmit3()">
+      <div class="form-group">
+        <label>River Raft Boat Set Price*</label>
+        <input
+          placeholder=""
+          class="form-control"
+          type="text"
+          formControlName="price"
+        />
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="setPriceForm?.invalid"
+      >
+        Submit
+      </button>
+      <br />
+      <br />
+      <div class="row" *ngIf="showMs3" style="text-align: center">
+        <div class="col-xs-12" style="display:inline-block ">
+          <p class="alert alert-success">
+            <strong>Your modification has been applied successfully!</strong>
+          </p>
+
+          <button class="btn btn-primary btn-sm" (click)="showMessage3()">
+            close
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
